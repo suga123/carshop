@@ -1,0 +1,3 @@
+imageid,Numbers,Sequence,0|0|1
+carid,Numbers,Integer,0|200
+imagepath,Numbers,Sequence,1|0|1

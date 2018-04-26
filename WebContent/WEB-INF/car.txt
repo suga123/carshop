@@ -1,0 +1,16 @@
+carid,Numbers,Sequence,0|0|1
+pinpaiming,Set,From Fixed List,奥迪|宝骏|宝马|奔驰|别克|宾利|大众|东风|福特|哈弗|吉普|捷豹|劳斯莱斯|路虎|雪佛兰|雪铁龙|众泰
+xilie,Set,From Fixed List,城市风尚|城市豪华|手动豪华|手动精英|手动舒适|自动豪华|自动精英|自动舒适
+shoujia,Numbers,Real,0|100|1
+goumaishijian,Time,Date,36526|43212|3|False|yyyy/M/d|h:nn:ss
+gonglishu,Numbers,Integer,0|1000000
+pailiang,Set,From Fixed List,1.0L|1.5L|2.0L|2.0T|2.5L|2.8T|3.0L|3.0T|4.0L|4.0T|5.0L|5.0T
+qicheshoutu,Text,Masked String,im\ages/temp/9.jpg
+miaoshu,Text,Random Number of Words,100|1000
+zhuangtai,Numbers,Integer,0|1
+cheliangleixing,Set,From Fixed List,MPV|SUV|敞篷车|超跑|轿车|跑车|皮卡车|商务车|硬派越野车
+biansuxiang,Set,From Fixed List,手动|手自一体|序列|自动
+dijishou,Numbers,Integer,0|5
+shipin,Set,From Fixed List,videos\343E7B68F239F70E-300.mp4|videos\51541F46F2FDBDC9-300.mp4|videos\836CC0FED1954339-300.mp4
+ranliaoleixing,Set,From Fixed List,柴油|电动|混动|汽油|天然气
+shifoutuiguang,Numbers,Integer,0|1

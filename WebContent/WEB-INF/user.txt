@@ -1,0 +1,12 @@
+userid,Numbers,Sequence,0|0|1
+username,Human,First Name,True|True
+password,Text,Random-length String,10|30|True|True|False|True
+nickname,Human,Full Name,True|True
+sex,Numbers,Integer,0|1
+age,Numbers,Integer,10|100
+image,Text,Masked String,im\ages/user/9.jpg
+job,Text,Random Number of Words,1|3
+jialing,Numbers,Integer,0|40
+email,Human,E-Mail Address (name@domain.tld)
+tel,Human,Phone Number (###-###-####)
+jianjie,Text,Random Number of Words,1|20

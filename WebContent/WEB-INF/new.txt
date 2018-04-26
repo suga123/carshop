@@ -1,0 +1,7 @@
+newid,Numbers,Sequence,1|0|1
+biaoti,Text,Random Number of Words,1|5
+neirong,Text,Random-length String,20|50|True|True|True|False
+fabushijian,Time,Date/Time,41640|43212.9706018519|3|False|yyyy/M/d|h:nn:ss
+faburen,Human,Full Name,True|True
+xinwenpeitu,Text,Masked String,im\ages/temp/9.jpg
+yueduliang,Numbers,Integer,0|500
