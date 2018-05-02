@@ -37,6 +37,8 @@ public class CarServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 	String methodName=request.getParameter("method");//通过前端传过来的method参数来识别用户是要调用哪个方法
 	switch (methodName) {
 	case "index":

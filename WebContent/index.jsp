@@ -7,18 +7,22 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
-<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %><!-- EL的函数库=jstl的函数 -->
+<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 
 
-<%  if(request.getAttribute("allCars")==null){
-		request.getRequestDispatcher("CarServlet?method=index").forward(request, response);
-} %>
+<!DOCTYPE html>
+<c:if test="${requestScope.allCars  eq  null}">
+	<c:redirect  url="CarServlet?method=index"></c:redirect><!-- 跳转页面的标签，重定向 -->
+</c:if>
+		
 
 
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head>
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -38,8 +42,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body class="menu-1 h-style-1 text-1">
 <div class="wrap">
-	<%@include file="top.jsp" %>
-	
+	<c:import url="top.jsp"></c:import>
 	<!-- - - - - - - - - - - - - - Top Panel - - - - - - - - - - - - - - - - -->	
 	
 	<div class="top-panel clearfix">
@@ -50,35 +53,27 @@
 
 			<ul class="slides">
 
-			<%
-			ArrayList<Car>  allCarsOfTuiguang =(ArrayList<Car>)request.getAttribute("tuiguangCars");
-				for(Car c:allCarsOfTuiguang)
-				{
-					%>
+			<c:forEach var="car"  items="${requestScope.tuiguangCars }">
 								<li>
-									<a href="CarServlet?method=detail&carid=<%=c.getCarId() %>"  target="_blank">
-									<img src="<%=c.getQicheshoutu() %>" alt="" style="width: 100%;height: 100%" />
+									<a href="CarServlet?method=detail&carid=${car.carId }"  target="_blank">
+									<img src="${car.qicheshoutu }" alt="" style="width: 100%;height: 100%" />
 									</a>
 									<div class="caption">
 										<div class="caption-entry">
 				
 											<dl class="auto-detailed clearfix">
-												<dt><span class="model"><%=c.getGoumaishijian().substring(0, c.getGoumaishijian().indexOf("/")) %>&nbsp;<%=c.getPinpaiming() %></span></dt>
-												<dd class="media-hidden"><b><%=c.getPailiang() %></b></dd>
-												<dd class="media-hidden"><b><%=c.getGonglishu() %>公里</b></dd>
-												<dd><span class="heading">￥<%=c.getShoujia() %>万</span></dd>
+												<dt><span class="model">${car.goumaishijian }&nbsp;${car.pinpaiming }</span></dt>
+												<dd class="media-hidden"><b>${car.pailiang }</b></dd>
+												<dd class="media-hidden"><b>${car.gonglishu }公里</b></dd>
+												<dd><span class="heading">￥${car.shoujia }万</span></dd>
 											</dl><!--/ .auto-detailed-->
 				
-											<a href="CarServlet?method=detail&carid=<%=c.getCarId() %>"  target="_blank"  class="button orange">详情 &raquo;</a>
+											<a href="CarServlet?method=detail&carid=${car.carId }"  target="_blank"  class="button orange">详情 &raquo;</a>
 				
 										</div><!--/ .caption-entry-->
 									</div><!--/ .caption-->
 								</li>					
-					<%
-				}
-			
-			%>
-				
+				</c:forEach>
 
 			</ul><!--/ .slides-->
 
@@ -193,34 +188,27 @@
 
 					<ul class="clearfix">
 
-					<%
-					ArrayList<Car>  allCars =(ArrayList<Car>)request.getAttribute("allCars");
-						for(Car  c:allCars)
-						{
-							%>
-									<li>
-										<a   name="sellCar"   href="CarServlet?method=detail&carid=<%=c.getCarId() %>" class="single-image video picture">
-											<img style="width: 200px;height: 120px;" src="<%=c.getQicheshoutu() %>" alt="" />
+
+						<c:forEach  var="c"  items="${requestScope.allCars }" varStatus="s">
+									<li>${s.index },,,${s.count },,,
+										<a   name="sellCar"   href="CarServlet?method=detail&carid=${c.carId }" class="single-image video picture">
+											<img style="width: 200px;height: 120px;" src="${c.qicheshoutu }" alt="" />
 										</a>
 			
-										<a href="CarServlet?method=detail&carid=<%=c.getCarId() %>" class="list-meta">
-											<h6 class="title-list-item"><%=c.getGoumaishijian().substring(0, c.getGoumaishijian().indexOf("/")) %>&nbsp;<%=c.getPinpaiming() %>&nbsp;<%=c.getXilie() %></h6>
+										<a href="CarServlet?method=detail&carid=${c.carId }" class="list-meta">
+											<h6 class="title-list-item">${c.goumaishijian }&nbsp;${c.pailiang }&nbsp;${c.xilie }</h6>
 										</a>
 			
 										<div class="detailed">
-											<span class="cost">￥<%=c.getShoujia() %>万</span>
-											<span><%=c.getPailiang() %></span> <br />
-											<b><%=c.getGonglishu() %> 公里</b>	
+											<span class="cost">￥${c.shoujia }万</span>
+											<span>${c.pailiang }</span> <br />
+											<b>${c.gonglishu }公里</b>	
 										</div><!--/ .detailed-->
 			
-										<a href="carDetail.jsp?carid=<%=c.getCarId() %>" class="button orange">详情</a>
+										<a href="carDetail.jsp?carid=${c.carId }" class="button orange">详情</a>
 										<label class="compare"><input type="checkbox" />比较</label>
-			
 									</li>
-							
-							<%
-						}
-					%>
+						</c:forEach>
 
 
 					</ul>
@@ -293,11 +281,9 @@
 					<h3 class="widget-title">最近新闻</h3>
 					
 					<ul>
-					<% 
-					ArrayList<New>  news =(ArrayList<New>)request.getAttribute("news");
-					for(New n:news){ %>
-						<li><a href="NewServlet?method=detail&newid=<%=n.getNewid()%>"><%=n.getBiaoti() %></a></li>
-						<%} %>
+					 <c:forEach  var="n"   items="${requestScope.news }">
+						<li><a href="NewServlet?method=detail&newid=${n.newid }">${fn:substring(n.biaoti,0,5) }</a></li>
+						</c:forEach>
 					</ul>
 					
 					<a href="news.jsp" class="see" target="_blank">查看更多新闻</a>
@@ -314,8 +300,7 @@
 		
 	</div><!--/ .main-->
 
-	<%@include  file="bottom.jsp" %>
-	<%=request.getAttribute("loginResultMessage") %>
+	<c:import url="bottom.jsp"></c:import>
 	<%  if(request.getAttribute("loginResultMessage")!=null&&request.getAttribute("loginResultMessage").toString().equals("codeError")) {%>
 	<script type="text/javascript">
 	alert("温馨提示:\r\n验证码填写错误!");

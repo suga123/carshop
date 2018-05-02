@@ -55,16 +55,6 @@ public abstract class BaseDAOImp implements  BaseDAO {
 		return sta;
 	}
 
-	public BaseDAOImp() {
-		try {
-			Class.forName(dirverClass);
-			con = DriverManager.getConnection(url, username, password);
-			sta = con.createStatement();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void disposeResource(Statement sta, ResultSet rs) {// dispose释放，关闭资源
 		if (rs != null) {
 			try {

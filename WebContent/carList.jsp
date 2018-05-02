@@ -2,13 +2,15 @@
 <%@page import="com.oracle.carshop.model.bean.Car"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  isELIgnored="false"%>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core"   prefix="test"%>
+
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html class="not-ie no-js" lang="en">
 <!--<![endif]-->
-<head>
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -30,7 +32,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
-
+<test:set  var="myname"  scope="session"  value="22324234"></test:set>
+${sessionScope.myname }
+<test:remove var="myname" scope="session"/>
 	<div class="wrap">
 		<%@include file="top.jsp"%>
 
