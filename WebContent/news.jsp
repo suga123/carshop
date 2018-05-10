@@ -1,20 +1,14 @@
-<%@page import="com.oracle.carshop.model.bean.New"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.oracle.carshop.model.dao.NewDAOImp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 
-<%
-	if(request.getAttribute("news")==null){
-		request.getRequestDispatcher("NewServlet?method=list").forward(request, response);
-	}
-	ArrayList<New> news=(ArrayList<New> )request.getAttribute("news");
-%>
-
+<c:if test="${empty  requestScope.news  }">
+	<c:redirect  url="NewServlet?method=list"></c:redirect>
+</c:if>
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -35,7 +29,7 @@
 
 <div class="wrap">
 	
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	
 	<div class="main">
@@ -50,30 +44,30 @@
 				
 				<h3 class="section-title">新闻列表</h3>
 
-				<% for(New n:news){ %>
+				<c:forEach var="n" items="${requestScope.news }">
 				<article class="entry clearfix secondary">
 
-					<a href="NewServlet?method=detail&newid=<%=n.getNewid() %>" target="_blank">
-					<img class="entry-image" alt="" src="<%=n.getXinwenpeitu() %>"  style="width: 160px;height: 80px;"/>
+					<a href="NewServlet?method=detail&newid=${n.newid }" target="_blank">
+					<img class="entry-image" alt="" src="${n.xinwenpeitu }"  style="width: 160px;height: 80px;"/>
 					</a>	
 
 					<div class="entry-body">
 
-						<span class="date"><b>日期:</b>&nbsp;<a href="#"><%=n.getFabushijian() %></a></span>
+						<span class="date"><b>日期:</b>&nbsp;<a href="#">${n.fabushijian }</a></span>
 						
 						<a href="blog-single.jsp">
-							<h6 class="title"><%=n.getBiaoti() %></h6>
+							<h6 class="title">${n.biaoti }</h6>
 						</a>
 
 						<p>
-							<%=n.getNeirong() %>
-							<a href="NewServlet?method=detail&newid=<%=n.getNewid() %>" class="details"  target="_blank">详情</a>
+							${n.neirong }
+							<a href="NewServlet?method=detail&newid=${n.newid }" class="detail"  target="_blank" class="button orange">详情</a>
 						</p>
 
 					</div><!--/ .entry-body-->
 
 				</article><!--/ .entry-->
-				<%} %>
+				</c:forEach>
 				<div class="wp-pagenavi clearfix">
 					
 					<span class="pages">Page 1 of 2</span>
@@ -239,7 +233,7 @@
 		
 	</div><!--/ .main-->
 
-	<%@include file="bottom.jsp" %>
+	<c:import url="bottom.jsp"></c:import>
 
 </body>
 </html>

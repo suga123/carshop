@@ -1,8 +1,10 @@
-<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -22,7 +24,7 @@
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	
 	<div class="main">
@@ -32,7 +34,7 @@
 		<section class="container content clearfix">
 			
 			
-			<div class="compare-table clearfix">
+			<div class="compare-table clearfix" style="overflow: scroll;display: inline-block; ;float: left; ">
 				
 				<div class="col features">
 					
@@ -55,69 +57,40 @@
 					</ul>
 					
 				</div><!--/ .col-->
-				
-				<div class="col">
+				<div >
+			<c:forEach  var="c" items="${requestScope.cars }">
+					<div class="col" style="width: 120px;">
 					
-					<div class="heading">&nbsp;</div>
-					
-					<div class="viewport">
-						
-						<figure>
-							<img src="images/temp/thumb-6.jpg" alt="" />
-							<figcaption>Ferrari F12 Berlinetta 2012</figcaption>
-						</figure>
-						
-						<a href="#" class="button orange">Details</a>						
-						
-					</div><!--/ .viewport-->
-					
-					<ul>
-						<li data-feature="Price">$35,000</li>
-						<li data-feature="Body Type">Sedan</li>
-						<li data-feature="Engine Size">3.8 &nbsp;&nbsp; 3.5</li>
-						<li data-feature="Transmission">Manual</li>
-						<li data-feature="Service History">Full</li>
-						<li data-feature="Mileage">14000</li>
-						<li data-feature="Year">2011</li>
-						<li data-feature="Owners">1</li>
-						<li data-feature="Fuel Type">Gas</li>
-						<li data-feature="Exterior Color">Red</li>
-						<li data-feature="Interior Color">Black</li>
-					</ul>
-					
-				</div><!--/ .col-->
-				
-				<div class="col">
-					
-					<div class="heading">&nbsp;</div>
-					
-					<div class="viewport">
-						
-						<figure>
-							<img src="images/temp/thumb-7.jpg" alt="" />
-							<figcaption>Ferrari F12 Berlinetta 2012</figcaption>
-						</figure>
-						
-						<a href="#" class="button orange">Details</a>						
-						
-					</div><!--/ .viewport-->
-					
-					<ul>
-						<li data-feature="Price">$35,000</li>
-						<li data-feature="Body Type">Sedan</li>
-						<li data-feature="Engine Size">3.8 &nbsp;&nbsp; 3.5</li>
-						<li data-feature="Transmission">Manual</li>
-						<li data-feature="Service History">Full</li>
-						<li data-feature="Mileage">14000</li>
-						<li data-feature="Year">2011</li>
-						<li data-feature="Owners">1</li>
-						<li data-feature="Fuel Type">Gas</li>
-						<li data-feature="Exterior Color">Red</li>
-						<li data-feature="Interior Color">Black</li>
-					</ul>
-					
-				</div><!--/ .col-->
-				
+							<div class="heading">&nbsp;</div>
+							
+							<div class="viewport">
+								
+								<figure>
+									<img src="${c.qicheshoutu }" alt="" width="120"  height="90" />
+									<figcaption>${c.pinpaiming }-${c.xilie }-${c.goumaishijian }</figcaption>
+								</figure>
+								
+								<a    target="_blank"  href="CarServlet?method=detail&carid=${c.carId }"  class="button orange">详情</a>						
+								
+							</div><!--/ .viewport-->
+							
+							<ul>
+								<li data-feature="Price"> ￥${c.shoujia }</li>
+								<li data-feature="Body Type">${c.cheliangleixing }</li>
+								<li data-feature="Engine Size">${c.pailiang}</li>
+								<li data-feature="Transmission">${c.biansuxiang }</li>
+								<li data-feature="Service History">无</li>
+								<li data-feature="Mileage">${c.gonglishu }</li>
+								<li data-feature="Year">${c.goumaishijian }</li>
+								<li data-feature="Owners">${c.dijishou }</li>
+								<li data-feature="Fuel Type">${c.ranliaoleixing }</li>
+								<li data-feature="Exterior Color">黑色</li>
+								<li data-feature="Interior Color">灰色</li>
+							</ul>
+							
+						</div><!--/ .col-->
+			</c:forEach>
+				</div>
 			</div><!--/ .compare-table-->
 
 		</section><!--/.container -->
@@ -126,7 +99,7 @@
 		
 	</div><!--/ .main-->
 
-	<%@include file="bottom.jsp" %>
+	<c:import url="bottom.jsp"></c:import>
 
 </body>
 </html>

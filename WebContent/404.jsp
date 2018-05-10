@@ -1,9 +1,10 @@
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title>二手車交易平台 |资源找不到</title>
@@ -21,7 +22,7 @@
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	
 	<div class="main">
@@ -54,6 +55,7 @@
 	</div><!--/ .main-->
 
 	
-<%@include file="bottom.jsp" %>
+<c:import url="bottom.jsp"></c:import>
+
 </body>
 </html>

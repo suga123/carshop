@@ -8,7 +8,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
-	<title>二手車交易平台 | Pricing Table</title>
+	<title>二手車交易平台 | 个人中心</title>
 	
 	<meta name="description" content="" />
 	<meta name="author" content="" />

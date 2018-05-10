@@ -71,7 +71,7 @@ public class NewServlet extends HttpServlet {
 	 */
 	protected void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		New n=dao.getNewInfoById(Integer.parseInt(request.getParameter("newid")));
-		request.setAttribute("new", n);
+		request.setAttribute("newInfo", n);
 		request.getRequestDispatcher("newDetail.jsp").forward(request, response);
 	}
 	/**
@@ -95,7 +95,7 @@ public class NewServlet extends HttpServlet {
 	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<New>  news=dao.listRecentNewsByCount(5);
 		request.setAttribute("news", news);
-		request.getRequestDispatcher("news.jsp").forward(request, response);
+		request.getRequestDispatcher(response.encodeRedirectURL("news.jsp")).forward(request, response);
 	}
 
 }

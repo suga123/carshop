@@ -1,8 +1,10 @@
-<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -22,7 +24,7 @@
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	<div class="main">
 
@@ -63,7 +65,7 @@
 
 					<footer class="meta clearfix">
 						<a href="#" class="icon-comments">12 comments</a>
-						<a href="blogDetail.jsp" class="button dark">Details</a>
+						<a href="blogDetail.jsp" class="button dark">详情</a>
 					</footer><!--/ .meta -->
 			
 				</article><!--/ .entry-->
@@ -95,7 +97,7 @@
 
 					<footer class="meta clearfix">
 						<a href="#" class="icon-comments">12 comments</a>
-						<a href="blogDetail.jsp" class="button dark">Details</a>
+						<a href="blogDetail.jsp" class="button dark">详情</a>
 					</footer><!--/ .meta -->
 			
 				</article><!--/ .entry-->
@@ -127,7 +129,7 @@
 
 					<footer class="meta clearfix">
 						<a href="#" class="icon-comments">12 comments</a>
-						<a href="blogDetail.jsp" class="button dark">Details</a>
+						<a href="blogDetail.jsp" class="button dark">详情</a>
 					</footer><!--/ .meta -->
 			
 				</article><!--/ .entry-->
@@ -159,7 +161,7 @@
 
 					<footer class="meta clearfix">
 						<a href="#" class="icon-comments">12 comments</a>
-						<a href="blogDetail.jsp" class="button dark">Details</a>
+						<a href="blogDetail.jsp" class="button dark">详情</a>
 					</footer><!--/ .meta -->
 			
 				</article><!--/ .entry-->
@@ -329,7 +331,7 @@
 	</div><!--/ .main-->
 
 	
-	<%@include file="bottom.jsp" %>
+	<c:import url="bottom.jsp"></c:import>
 
 </body>
 </html>

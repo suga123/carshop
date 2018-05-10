@@ -1,16 +1,11 @@
-<%@page import="com.oracle.carshop.model.bean.CarImage"%>
-<%@page import="java.util.Set"%>
-<%@page import="com.oracle.carshop.model.bean.Car"%>
-<%@page import="com.oracle.carshop.model.dao.CarDAOImp"%>
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
-
-<%  Car  carInfo=(Car)request.getAttribute("car"); %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -33,7 +28,7 @@
 <div class="wrap">
 
 
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	<div class="main">
 
@@ -47,64 +42,25 @@
 				
 				<article class="item clearfix">
 					
-					<h2 class="title"><%=carInfo.getPinpaiming() %>-<%=carInfo.getXilie() %>-<%=carInfo.getGoumaishijian() %></h2>
+					<h2 class="title">${requestScope.car.pinpaiming }-${requestScope.car.xilie }-${requestScope.car.goumaishijian }</h2>
 					
 					<div id="gallery" class="gallery">
 
 						<div class="slideshow-container">
-						<img  id="show" src="<%=carInfo.getQicheshoutu()%>"  style="width: 100%;height: 100%"/>
+						<img  id="show" src="${requestScope.car.qicheshoutu }"  style="width: 100%;height: 100%"/>
 <!-- 							<div id="loading" class="loader"></div> -->
 <!-- 							<div id="slideshow" class="slideshow clearfix"></div> -->
 						</div><!--/ .slideshow-container-->
 
 						<div id="thumbs" class="clearfix">
 							<ul class="thumbs list-image clearfix">
-							<%  Set<CarImage>  imgs=carInfo.getImgs();
-								for(CarImage im:imgs){
-							%>
+							<c:forEach var="c"  items="${requestScope.car.imgs }">
 								<li>
-									<a class="thumb" name="leaf" href="images/new/<%=im.getImagepath() %>.jpg" >
-										<img name='imgs'  src="images/new/<%=im.getImagepath() %>.jpg"  style="width: 145px;height: 100px;"/>
+									<a class="thumb" name="leaf" href="images/new/${c.imagepath }.jpg" >
+										<img name='imgs'  src="images/new/${c.imagepath }.jpg"  style="width: 145px;height: 100px;"/>
 									</a>
 								</li>
-							<%} %>
-
-								<!-- <li>
-									<a class="thumb" name="leaf" href="images/temp/item-1.jpg" title="Title 0">
-										<img src="images/temp/list-thumb-1.jpg" alt="Title #1" />
-									</a>
-								</li>
-
-								<li>
-									<a class="thumb" name="leaf" href="images/temp/item-2.jpg" title="Title 1">
-										<img src="images/temp/list-thumb-2.jpg" alt="Title #2" />
-									</a>
-								</li>
-
-								<li>
-									<a class="thumb" name="leaf" href="images/temp/item-3.jpg" title="Title 2">
-										<img src="images/temp/list-thumb-3.jpg" alt="Title #3" />
-									</a>
-								</li>	
-
-								<li>
-									<a class="thumb" name="leaf" href="images/temp/item-4.jpg" title="Title 3">
-										<img src="images/temp/list-thumb-4.jpg" alt="Title #4" />
-									</a>
-								</li>	
-
-								<li>
-									<a class="thumb" name="leaf" href="images/temp/item-5.jpg" title="Title 4">
-										<img src="images/temp/list-thumb-5.jpg" alt="Title #5" />
-									</a>
-								</li>	
-
-								<li>
-									<a class="thumb" name="leaf" href="images/temp/item-6.jpg" title="Title 5">
-										<img src="images/temp/list-thumb-6.jpg" alt="Title #6" />
-									</a>
-								</li>	 -->
-
+							</c:forEach>
 							</ul><!--/ .thumbs-->
 
 						</div><!--/ #thumbs-->
@@ -115,17 +71,17 @@
 						
 						<b class="heading">售价:</b>
 						
-						<span class="cost">￥<%=carInfo.getShoujia() %>万</span>
+						<span class="cost">￥${requestScope.car.shoujia }万</span>
 						
 						<ul class="list type-1">
 <!-- 							<li><b>Reg Number: </b><span>423423</span></li> -->
-							<li><b>行驶公里: </b><span><%=carInfo.getGonglishu() %></span></li>
-							<li><b>车辆类型: </b><span><%=carInfo.getCheliangleixing() %></span></li>
-							<li><b>购买时间: </b><span><%=carInfo.getGoumaishijian() %></span></li>
-							<li><b>车辆排量: </b><span><%=carInfo.getPailiang() %></span></li>
-							<li><b>变速箱: </b><span><%=carInfo.getBiansuxiang() %></span></li>
-							<li><b>燃料类型: </b><span><%=carInfo.getRanliaoleixing() %></span></li>
-							<li><b>几手: </b><span><%=carInfo.getDijishou() %>手</span></li>
+							<li><b>行驶公里: </b><span>${requestScope.car.gonglishu }</span></li>
+							<li><b>车辆类型: </b><span>${requestScope.car.cheliangleixing }</span></li>
+							<li><b>购买时间: </b><span>${requestScope.car.goumaishijian }</span></li>
+							<li><b>车辆排量: </b><span>${requestScope.car.pailiang }</span></li>
+							<li><b>变速箱: </b><span>${requestScope.car.biansuxiang }</span></li>
+							<li><b>燃料类型: </b><span>${requestScope.car.ranliaoleixing }</span></li>
+							<li><b>几手: </b><span>${requestScope.car.dijishou }手</span></li>
 						</ul>
 						
 						<ul class="addthis-toolbox clearfix">
@@ -144,7 +100,7 @@
 						<div class="video-box">
 							
 							<b class="heading">视频介绍:</b>
-							<video src="<%=carInfo.getShipin() %>"  preload="auto" controls="controls" style="width: 100%;border:1px solid #eeeeee"></video>
+							<video src="${requestScope.car.shipin }"  preload="auto" controls="controls" style="width: 100%;border:1px solid #eeeeee"></video>
 <!-- 							<a href="http://www.youtube.com/embed/CNP8DMCDjgw?feature=player_detailpage" class="video-image video-icon"> -->
 <!-- 								<img src="images/temp/list-thumb-1.jpg" alt="" /> -->
 <!-- 							</a>							 -->
@@ -154,7 +110,7 @@
 						<h3 class="section-title">详细介绍</h3>
 						
 						<p>
-							<%=carInfo.getMiaoshu() %>
+							${requestScope.car.miaoshu }
 						</p>
 						
 <!-- 						<p> -->
@@ -558,7 +514,7 @@
 		
 	</div><!--/ .main-->
 
-	<%@include file="bottom.jsp" %>		
+	<c:import url="bottom.jsp"></c:import>		
 <script type="text/javascript">
 $(document).ready(function(){
 	$("[name='imgs']").click(function(){

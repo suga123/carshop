@@ -1,8 +1,5 @@
-<%@page import="com.oracle.carshop.model.bean.PageBean"%>
-<%@page import="com.oracle.carshop.model.bean.Car"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  isELIgnored="false"%>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core"   prefix="test"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core"   prefix="c"%>
 
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
@@ -10,7 +7,7 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html class="not-ie no-js" lang="en">
 <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -32,11 +29,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="menu-1 h-style-1 text-1">
-<test:set  var="myname"  scope="session"  value="22324234"></test:set>
-${sessionScope.myname }
-<test:remove var="myname" scope="session"/>
 	<div class="wrap">
-		<%@include file="top.jsp"%>
+		<c:import url="top.jsp"></c:import>
 
 		<div class="main">
 
@@ -55,31 +49,32 @@ ${sessionScope.myname }
 						</h3>
 
 						<ul class="recent-list-cars clearfix">
-							<%
-								ArrayList<Car> cars = (ArrayList<Car>) request.getAttribute("cars");
-								for (Car c : cars) {
-							%>
-							<li><a  name="sellCar" href="CarServlet?method=detail&carid=<%=c.getCarId() %>"
+							<c:forEach var="c"  items="${requestScope.cars }">
+							
+							
+							<li><a  name="sellCar" href="CarServlet?method=detail&carid=${c.carId }"
 								class="single-image picture"> <img
 									style="width: 200px; height: 120px;"
-									src="<%=c.getQicheshoutu()%>" alt="" />
-							</a> <a href="CarServlet?method=detail&carid=<%=c.getCarId() %>"
+									src="${c.qicheshoutu }" alt="" />
+							</a> <a href="CarServlet?method=detail&carid=${c.carId }"
 								class="list-meta">
-									<h6 class="title-list-item"><%=c.getGoumaishijian().substring(0, c.getGoumaishijian().indexOf("/"))%>&nbsp;<%=c.getPinpaiming()%>&nbsp;<%=c.getXilie()%></h6>
+									<h6 class="title-list-item">${c.goumaishijian }&nbsp;<span style="color:orange">${c.pinpaiming}</span>&nbsp;${c.pailiang }&nbsp;${c.xilie }</h6>
 							</a>
 
 								<div class="detailed">
-									<span class="cost">￥<%=c.getShoujia()%>万
-									</span> <span><%=c.getPailiang()%></span> <br /> <b><%=c.getGonglishu()%>
+									<span class="cost">￥${c.shoujia }万
+									</span> <span>${c.pailiang }</span> <br /> <b>${c.gonglishu }
 										公里</b>
 								</div>
 								<!--/ .detailed--> <a
-								href="CarServlet?method=detail&carid=<%=c.getCarId() %>"
-								class="button orange">详情</a> <label class="compare"><input
+								href="CarServlet?method=detail&carid=${c.carId }"
+								class="button orange">详情</a> 
+								<a href="ShoppingCarServlet?method=add&carid=${c.carId }"  target="_blank">
+											<img onmouseover="this.style.boxShadow='-1px  -1px  12px red'" onmouseout="this.style.boxShadow=''"  src="images/shoppingCar.png" width="25" height="25" title="添加到购物车" style="margin: 0px;padding: 0px;position: relative;top: 8px;border-radius:12.5px" />
+										</a>
+								<label class="compare"><input
 									type="checkbox" />比较</label></li>
-							<%
-								}
-							%>
+							</c:forEach>
 						</ul>
 						<!--/ .recent-list-cars-->
 
@@ -138,18 +133,8 @@ ${sessionScope.myname }
 
 						<fieldset>
 							<label for="manufacturer">品牌:</label>
-							<%
-								if (request.getParameter("manufacturer") != null) {
-							%>
 							<input type="text" id="manufacturer" name="manufacturer"
-								value="<%=new String(request.getParameter("manufacturer").getBytes("ISO-8859-1"), "UTF-8")%>" />
-							<%
-								} else {
-							%>
-							<input type="text" id="manufacturer" name="manufacturer" />
-							<%
-								}
-							%>
+								value="${param.manufacturer }" />
 							<!-- 							<select id="manufacturer" name="manufacturer"> -->
 							<!-- 								<option value="0" />Any -->
 							<!-- 								<option value="1" />Lorem -->
@@ -170,19 +155,9 @@ ${sessionScope.myname }
 
 						<fieldset>
 							<label for="maxprice">最高价:</label>
-							<%
-								if (request.getParameter("maxprice") != null) {
-							%>
 							<input type="text"
 								id="maxprice" name="maxprice"
-								value="<%=request.getParameter("maxprice")%>"     style="width: 50px;height: 20px;"/>
-							<%
-								} else {
-							%>
-							 <input type="text" id="maxprice" name="maxprice"     style="width: 50px;height: 20px;"/>
-							<%
-								}
-							%>
+								value="${param.maxprice }"     style="width: 50px;height: 20px;"/>
 							<!-- 							<select id="maxprice" name="maxprice"> -->
 							<!-- 								<option value="0" />No max -->
 							<!-- 								<option value="1" />Lorem -->
@@ -192,18 +167,8 @@ ${sessionScope.myname }
 
 						<fieldset>
 							<label for="trans">变速箱类型:</label>
-							<%
-								if (request.getParameter("trans") != null) {
-							%>
 							<input type="text" id="trans" name="trans"
-								value="<%=new String(request.getParameter("trans").getBytes("ISO-8859-1"), "UTF-8")%>" />
-							<%
-								} else {
-							%>
-							<input type="text" id="trans" name="trans" />
-							<%
-								}
-							%>
+								value="${param.trans }" />
 							<!-- 							<select id="trans" name="trans"> -->
 							<!-- 								<option value="0" />Any -->
 							<!-- 								<option value="1" />Lorem -->
@@ -213,33 +178,13 @@ ${sessionScope.myname }
 
 						<fieldset>
 							<label for="mileage">公里数:</label> 
-							<%
-								if (request.getParameter("mileage") != null) {
-							%>
 							<input type="text"
 								id="mileage" name="mileage"
-								value="<%=request.getParameter("mileage")%>"  style="width: 55px;height: 20px;"/>
-							<%
-								} else {
-							%>
-							 <input type="text" id="mileage" name="mileage"    style="width: 55px;height: 20px;"/>
-							<%
-								}
-							%>
+								value="${param.mileage }"  style="width: 55px;height: 20px;"/>
 							到
-							<%
-								if (request.getParameter("maxmileage") != null) {
-							%>
 							<input type="text"
 								id="maxmileage" name="maxmileage"
-								value="<%=request.getParameter("maxmileage")%>"    style="width: 55px;height: 20px;"/>
-							<%
-								} else {
-							%>
-							 <input type="text" id="maxmileage" name="maxmileage"   style="width: 55px;height: 20px;" />
-							<%
-								}
-							%>
+								value="${param.maxmileage }"    style="width: 55px;height: 20px;"/>
 							<!-- 							<select id="mileage" name="mileage"> -->
 							<!-- 								<option value="0" />Any -->
 							<!-- 								<option value="1" />Lorem -->
@@ -249,18 +194,8 @@ ${sessionScope.myname }
 
 						<fieldset>
 							<label for="bodytype">车辆尺寸:</label>
-							<%
-								if (request.getParameter("bodytype") != null) {
-							%>
 							<input type="text" id="bodytype" name="bodytype"
-								value="<%=new String(request.getParameter("bodytype").getBytes("ISO-8859-1"), "UTF-8")%>" />
-							<%
-								} else {
-							%>
-							<input type="text" id="bodytype" name="bodytype" />
-							<%
-								}
-							%>
+								value="${param.bodytype }" />
 							<!-- 							<select id="bodytype" name="bodytype"> -->
 							<!-- 								<option value="0" />Any -->
 							<!-- 								<option value="1" />Lorem -->
@@ -357,8 +292,7 @@ ${sessionScope.myname }
 		</div>
 		<!--/ .main-->
 
-		<%@include file="bottom.jsp"%>
-		
+		<c:import url="bottom.jsp"></c:import>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$("#goto").change(function(){

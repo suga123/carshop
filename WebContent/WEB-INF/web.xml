@@ -8,20 +8,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
- <!--  <error-page>
-    <error-code>404</error-code>
-    <location>/404.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/error.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>502</error-code>
-    <location>/error.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>503</error-code>
-    <location>/error.jsp</location>
-  </error-page> -->
+  <resource-env-ref>
+    <resource-env-ref-name>carshop</resource-env-ref-name>
+    <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
+  </resource-env-ref>
+  <listener>
+  	<listener-class>com.oracle.carshop.control.listener.SessionListener</listener-class>
+  </listener>
+  <session-config>
+  	<session-timeout>20</session-timeout>
+  </session-config>
 </web-app>

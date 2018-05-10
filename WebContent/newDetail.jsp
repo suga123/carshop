@@ -1,15 +1,10 @@
-<%@page import="com.oracle.carshop.model.bean.New"%>
-<%@page import="com.oracle.carshop.model.dao.NewDAOImp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
-<%
-	New  n=(New)request.getAttribute("new");
-
-%>
 <!DOCTYPE html>
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -29,7 +24,7 @@
 <body class="menu-1 h-style-1 text-1">
 
 <div class="wrap">
-	<%@include file="top.jsp" %>
+	<c:import url="top.jsp"></c:import>
 	
 	<div class="main">
 
@@ -39,24 +34,24 @@
 			
 			<h3 class="widget-title">新闻详情</h3>
 			
-			<img class="alignleft" src="<%=n.getXinwenpeitu() %>"  style="width: 460px;height: 280px;" alt="" />
+			<img class="alignleft" src="${requestScope.newInfo.xinwenpeitu }"  style="width: 460px;height: 280px;" alt="" />
 			
-			<h3><%=n.getBiaoti() %></h3>
-			<h3><%=n.getFabushijian() %></h3>
-			<h3><%=n.getYueduliang() %>人阅读过</h3>
+			<h3>${requestScope.newInfo.biaoti }</h3>
+			<h3>${requestScope.newInfo.fabushijian }</h3>
+			<h3>${requestScope.newInfo.yueduliang }人阅读过</h3>
 			
 			<p>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
-				<%=n.getNeirong() %>
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
+				${requestScope.newInfo.neirong }
 				
 			</p>
 			
@@ -142,7 +137,7 @@
 		
 	</div><!--/ .main-->
 
-	<%@include file="bottom.jsp" %>		
+	<c:import url="bottom.jsp"></c:import>		
 
 </body>
 </html>

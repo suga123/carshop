@@ -1,12 +1,3 @@
-<%@page import="com.oracle.carshop.model.bean.New"%>
-<%@page import="com.oracle.carshop.model.dao.NewDAOImp"%>
-<%@page import="com.oracle.carshop.model.dao.CarDAOImp"%>
-<%@page import="com.oracle.carshop.model.bean.Car"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %><!-- EL的函数库=jstl的函数 -->
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
@@ -22,7 +13,7 @@
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if IE 9]>					<html class="ie9 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
-<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/${pageContext.request.contextPath}/">
+<head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
@@ -36,7 +27,6 @@
 	<link rel="stylesheet" href="css/skeleton.css" media="screen" />
 	<link rel="stylesheet" href="sliders/flexslider/flexslider.css" media="screen" />
 	<link rel="stylesheet" href="fancybox/jquery.fancybox.css" media="screen" />
-
 	<!-- HTML5 Shiv + detect touch events -->
 	<script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
@@ -69,7 +59,6 @@
 											</dl><!--/ .auto-detailed-->
 				
 											<a href="CarServlet?method=detail&carid=${car.carId }"  target="_blank"  class="button orange">详情 &raquo;</a>
-				
 										</div><!--/ .caption-entry-->
 									</div><!--/ .caption-->
 								</li>					
@@ -190,7 +179,7 @@
 
 
 						<c:forEach  var="c"  items="${requestScope.allCars }" varStatus="s">
-									<li>${s.index },,,${s.count },,,
+									<li>
 										<a   name="sellCar"   href="CarServlet?method=detail&carid=${c.carId }" class="single-image video picture">
 											<img style="width: 200px;height: 120px;" src="${c.qicheshoutu }" alt="" />
 										</a>
@@ -205,8 +194,12 @@
 											<b>${c.gonglishu }公里</b>	
 										</div><!--/ .detailed-->
 			
-										<a href="carDetail.jsp?carid=${c.carId }" class="button orange">详情</a>
-										<label class="compare"><input type="checkbox" />比较</label>
+										<a href="CarServlet?method=detail&carid=${c.carId }" class="button orange">详情</a>
+											&nbsp;
+										<a href="ShoppingCarServlet?method=add&carid=${c.carId }"  target="_blank">
+											<img onmouseover="this.style.boxShadow='-1px  -1px  12px red'" onmouseout="this.style.boxShadow=''"  src="images/shoppingCar.png" width="25" height="25" title="添加到购物车" style="margin: 0px;padding: 0px;position: relative;top: 8px;border-radius:12.5px" />
+										</a>
+										<label class="compare"><input  name="compare"  value="${c.carId }"  type="checkbox" /><a href="javascript:compare()">比较</a></label>
 									</li>
 						</c:forEach>
 
@@ -301,22 +294,37 @@
 	</div><!--/ .main-->
 
 	<c:import url="bottom.jsp"></c:import>
-	<%  if(request.getAttribute("loginResultMessage")!=null&&request.getAttribute("loginResultMessage").toString().equals("codeError")) {%>
-	<script type="text/javascript">
-	alert("温馨提示:\r\n验证码填写错误!");
-	</script>
-	<%} else if(request.getAttribute("loginResultMessage")!=null&&request.getAttribute("loginResultMessage").toString().equals("userError")){ %>
-	<script type="text/javascript">
-	alert("温馨提示:\r\n用户名和密码错误!");
-	</script>
-	<%} else if(request.getAttribute("loginResultMessage")!=null&&request.getAttribute("loginResultMessage").toString().equals("registerSuccess")){ %>
-	<script type="text/javascript">
-	alert("温馨提示:\r\n注册成功!");
-	</script>
-	<%} else if(request.getAttribute("loginResultMessage")!=null&&request.getAttribute("loginResultMessage").toString().equals("registerFail")){ %>
-	<script type="text/javascript">
-	alert("温馨提示:\r\n注册失败!");
-	</script>
-	<%} %> 
+	<c:choose>
+			<c:when test="${requestScope.loginResultMessage eq 'codeError'}">
+				<script type="text/javascript">
+					alert("温馨提示:\r\n验证码填写错误!");
+				</script>
+			</c:when>
+			<c:when test="${requestScope.loginResultMessage eq 'userError'}">
+				<script type="text/javascript">
+					alert("温馨提示:\r\n用户名和密码错误!");
+				</script>
+			</c:when>
+			<c:when test="${requestScope.loginResultMessage eq 'registerSuccess'}">
+				<script type="text/javascript">
+					alert("温馨提示:\r\n注册成功!");
+				</script>
+			</c:when>
+			<c:when test="${requestScope.loginResultMessage eq 'registerFail'}">
+				<script type="text/javascript">
+					alert("温馨提示:\r\n注册失败!");
+				</script>
+			</c:when>
+	</c:choose>
 </body>
 </html>
+
+<script>
+	function  compare(){
+		var ids="";
+		$("[name='compare']:checked").each(function(){
+			ids+=$(this).val()+",";
+		});
+		location.href='CarServlet?method=compare&ids='+ids;
+	}
+</script>

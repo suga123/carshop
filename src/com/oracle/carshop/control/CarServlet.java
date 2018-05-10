@@ -2,6 +2,7 @@ package com.oracle.carshop.control;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,6 +64,10 @@ public class CarServlet extends HttpServlet {
 	{
 		listCarByPage(request,response);
 		break;
+	}case "compare"://分頁查詢顯示車輛信息的方法
+	{
+		compare(request,response);
+		break;
 	}
 	default:
 		break;
@@ -84,7 +89,8 @@ public class CarServlet extends HttpServlet {
 
 		request.setAttribute("allCars", allCars);
 		request.setAttribute("tuiguangCars", allCarsOfTuiguang);
-		request.getRequestDispatcher("NewServlet?method=listForIndex").include(request, response);
+		//URL重写（让原来简单的超级连接，会自动在后面跟上一个jsessionID的参数）
+		request.getRequestDispatcher(response.encodeRedirectURL("NewServlet?method=listForIndex")).include(request, response);
 	}
 	/**
 	 * 这是加载某个车辆详情的方法
@@ -177,6 +183,23 @@ public class CarServlet extends HttpServlet {
 		request.setAttribute("pageBean", pageBean);
 		request.setAttribute("cars", cars);
 		request.getRequestDispatcher("carList.jsp").forward(request, response);
+	}
+	/**
+	 * 车型比较的方法
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void compare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			String ids=request.getParameter("ids");
+			String[] idss=ids.split(",");
+			ArrayList<Car>  cs=new ArrayList<>();
+			for(String id:idss) {
+				cs.add(dao.getCarInfoByCarId(Integer.parseInt(id)));
+			}
+			request.setAttribute("cars", cs);
+			request.getRequestDispatcher("compareCar.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
