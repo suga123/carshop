@@ -1,10 +1,14 @@
 package com.oracle.carshop.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +41,11 @@ public class ShoppingCarServlet extends HttpServlet {
 		case "deleteAll":
 		{	
 			deleteAll(request, response);
+			break;
+		}
+		case "listAllCars":
+		{	
+			listAllCars(request, response);
 			break;
 		}
 		default:
@@ -82,6 +91,14 @@ public class ShoppingCarServlet extends HttpServlet {
 			}
 //			3.为了保证购物车能够在多次操作后依然能读取里面的数据，我们需要用session来存储购物车的数据
 			request.getSession().setAttribute("cars", shoppingcars);
+			
+			//4.为了提升用户体验度，我们除了讲用户购物车的数据放入session，同时再存入cookie，方便用户关闭页面时再打开能看到之前的购物车商品
+			
+			for(Car  cc:shoppingcars.keySet()) {
+				Cookie  r=new Cookie("car"+cc.getCarId(), cc.getCarId()+","+shoppingcars.get(cc));
+				r.setMaxAge(1000*60*60*24*15);
+				response.addCookie(r);
+			}
 		}
 		response.sendRedirect("shoppingCar.jsp");//当数据添加到购物车之后，直接跳转到购物车页面，让用户看一下购物车的信息
 	}
@@ -100,6 +117,14 @@ public class ShoppingCarServlet extends HttpServlet {
 		for(Car c:shoppingcars.keySet()) {
 			if(c.getCarId()==Integer.parseInt(id)) {
 				shoppingcars.remove(c);
+				Cookie[] cs=request.getCookies();
+				for(Cookie css:cs) {
+					if(css.getName().equals("car"+id)) {
+						css.setMaxAge(0);
+						response.addCookie(css);
+						break;
+					}
+				}
 				break;
 			}
 		}
@@ -116,6 +141,31 @@ public class ShoppingCarServlet extends HttpServlet {
 	protected void deleteAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().removeAttribute("cars");
 		response.sendRedirect("shoppingCar.jsp");
+	}
+	/**
+	 * 从cookie中度取出所有的购物车信息显示到购物车页面上
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void listAllCars(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/**
+		 * 调用这个方法，说明是要查看购物车，我们直接读取cookie中存储的商品信息，然后将cookie中读取的商品信息查出来然后存起来，显示在页面上
+		 */
+		HashMap<Car, Integer>  shoppingcars=new HashMap<>();
+		Cookie[]  cs=request.getCookies();
+		if(cs!=null)
+		{
+			for(Cookie c:cs) {
+				if(c.getName().startsWith("car")) {
+					String[] kv=c.getValue().replaceAll("\"", "").split(",");
+					shoppingcars.put(dao.getCarInfoByCarId(Integer.parseInt(kv[0])), Integer.parseInt(kv[1]));
+				}
+			}
+		}
+		request.getSession().setAttribute("cars", shoppingcars);
+		request.getRequestDispatcher("shoppingCar.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

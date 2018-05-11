@@ -125,9 +125,9 @@
 		</c:if>
 		<c:if test="${not empty sessionScope.loginedUser }">
 			<span  class="loged">
-			<a  href="javascript:void()" title="个人中心" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='' ">
-			<img src="<%=((User)session.getAttribute("loginedUser")).getImage() %>" style="width: 20px;height: 20px;border-radius: 10px;"/>
-			<span style="position: relative;top: -5px;color:white;'"><%=((User)session.getAttribute("loginedUser")).getNickname() %></span>
+			<a  href="UserServlet?method=loadProfile&userid=${sessionScope.loginedUser.userid }" title="个人中心" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='' ">
+			<img src="${sessionScope.loginedUser.image }" style="width: 20px;height: 20px;border-radius: 10px;"/>
+			<span style="position: relative;top: -5px;color:white;'">${sessionScope.loginedUser.nickname }</span>
 			</a><br/>
 			<a  href="UserServlet?method=logoff" style="color: green;text-shadow: -2px -2px 10px white">安全退出</a>
 			</span>
@@ -159,7 +159,8 @@
 		<p>
 <!-- 			<a  id="submitButton"  href="#" class="button dark enter-btn">登陆</a> -->
 			<input type="submit"  class="button dark enter-btn" value="登陆" style="border: none" />
-			<a id="registerButton" href="#" class="button dark enter-btn">注册</a>
+<!-- 			<a id="registerButton" href="#" class="button dark enter-btn">注册</a> -->
+			<a   href="register.jsp"  target="_blank" class="button dark enter-btn">注册</a>
 			<a href="javascript:void();" id="closeLogin" class="button dark enter-btn">关闭</a>
 		</p>
 		

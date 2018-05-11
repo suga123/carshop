@@ -120,6 +120,7 @@
 					</ul>
 				</li>
 				<li><a href="contact.jsp">联系我们</a></li>
+				<li><a href="ShoppingCarServlet?method=listAllCars"><img src="images/shoppingCar.png"  width="30" height="30" title="查看购物车" style="position: relative;top: 8px;"/></a></li>
 			</ul>
 			
 		</nav><!--/ #navigation-->

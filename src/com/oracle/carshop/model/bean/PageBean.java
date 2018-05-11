@@ -1,6 +1,8 @@
 package com.oracle.carshop.model.bean;
 
-public class PageBean {
+import java.io.Serializable;
+
+public class PageBean    implements Serializable{
 
 	private int nowPage;
 	private int previousPage;

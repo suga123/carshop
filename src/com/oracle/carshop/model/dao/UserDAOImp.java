@@ -31,8 +31,27 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 
 	@Override
 	public boolean update(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		User u=(User)o;
+		PreparedStatement  preSta=null;
+		int result=0;
+		try {
+			  preSta=getPreSta("update user set username=? ,nickname=?,sex=?,age=?,image=?,job=?,jialing=?,email=?,tel=?,jianjie=? where userid=?");
+			  preSta.setString(1, u.getUsername());
+			  preSta.setString(2, u.getNickname());
+			  preSta.setInt(3, u.getSex());;
+			  preSta.setInt(4, u.getAge());;
+			  preSta.setString(5, u.getImage());
+			  preSta.setString(6, u.getJob());
+			  preSta.setInt(7, u.getJialing());
+			  preSta.setString(8, u.getEmail());
+			  preSta.setString(9, u.getTel());
+			  preSta.setString(10, u.getJianjie());
+			  preSta.setInt(11, u.getUserid());
+			  result=preSta.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result>0?true:false;
 	}
 
 	@Override
@@ -53,18 +72,58 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 			rs=sta.executeQuery();
 			if(rs.next()) {
 				user=new User();
+				user.setUserid(rs.getInt("userid"));
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				if(rs.getString("image")!=null)
+				{
 				user.setAge(rs.getInt("age"));
 				user.setImage(rs.getString("image"));
 				user.setNickname(rs.getString("nickname"));
-				user.setPassword(rs.getString("password"));
-				user.setSex(rs.getString("sex"));
-				user.setUserid(rs.getInt("userid"));
-				user.setUsername(rs.getString("username"));
+				user.setSex(rs.getInt("sex"));
+				user.setJob(rs.getString("job"));
+				user.setJialing(rs.getInt("jialing"));
+				user.setEmail(rs.getString("email"));
+				user.setTel(rs.getString("tel"));
+				user.setJianjie(rs.getString("jianjie"));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return user;
 	}
+
+	@Override
+	public User getUserInfoByUserId(int userid) {
+		User  user=null;
+		PreparedStatement  sta=null;
+		ResultSet rs=null;
+		try {
+			  sta=getPreSta("select *  from user where userid=?");
+			sta.setInt(1, userid);
+			rs=sta.executeQuery();
+			if(rs.next()) {
+				user=new User();
+				user.setUserid(rs.getInt("userid"));
+				user.setUsername(rs.getString("username"));
+				user.setPassword(rs.getString("password"));
+				if(rs.getString("image")!=null)
+				{
+					user.setAge(rs.getInt("age"));
+					user.setImage(rs.getString("image"));
+					user.setNickname(rs.getString("nickname"));
+					user.setSex(rs.getInt("sex"));
+					user.setJob(rs.getString("job"));
+					user.setJialing(rs.getInt("jialing"));
+					user.setEmail(rs.getString("email"));
+					user.setTel(rs.getString("tel"));
+					user.setJianjie(rs.getString("jianjie"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;	}
 
 }

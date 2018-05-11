@@ -1,14 +1,56 @@
 package com.oracle.carshop.model.bean;
 
-public class User {
+import java.io.Serializable;
+
+public class User    implements Serializable{
 	
 	private int userid;
 	private String username;
 	private String password;
 	private String nickname;
 	private int age;
-	private String sex;
+	private int sex;
+	
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
 	private String image;
+	private String job;
+	private int jialing;
+	private String email;
+	private String tel;
+	private String jianjie;
+	
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public int getJialing() {
+		return jialing;
+	}
+	public void setJialing(int jialing) {
+		this.jialing = jialing;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public String getJianjie() {
+		return jianjie;
+	}
+	public void setJianjie(String jianjie) {
+		this.jianjie = jianjie;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -33,19 +75,14 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public String getSex() {
-		return sex;
-	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public User(int userid, String username, String password, String nickname, int age, String sex, String image) {
+	public User(int userid, String username, String password, String nickname, int age, int sex, String image,
+			String job, int jialing, String email, String tel, String jianjie) {
 		super();
 		this.userid = userid;
 		this.username = username;
@@ -54,6 +91,14 @@ public class User {
 		this.age = age;
 		this.sex = sex;
 		this.image = image;
+		this.job = job;
+		this.jialing = jialing;
+		this.email = email;
+		this.tel = tel;
+		this.jianjie = jianjie;
+	}
+	public int getSex() {
+		return sex;
 	}
 	public int getUserid() {
 		return userid;
@@ -67,7 +112,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", username=" + username + ", password=" + password + ", nickname=" + nickname
-				+ ", age=" + age + ", sex=" + sex + ", image=" + image + "]";
+				+ ", age=" + age + ", sex=" + sex + ", image=" + image + ", job=" + job + ", jialing=" + jialing
+				+ ", email=" + email + ", tel=" + tel + ", jianjie=" + jianjie + "]";
 	}
 	
 

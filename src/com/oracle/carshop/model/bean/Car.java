@@ -1,8 +1,9 @@
 package com.oracle.carshop.model.bean;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Car {  
+public class Car  implements Serializable{  
 	public Car(int carId) {
 		super();
 		this.carId = carId;

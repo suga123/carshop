@@ -48,7 +48,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return cars;
 	}
 
@@ -65,7 +64,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return cars;
 	}
 
@@ -81,7 +79,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return c;
 	}
 
@@ -124,7 +121,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return cars;
 	}
 
@@ -205,7 +201,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return cars;
 	}
 	public void updateCarVideo() {
@@ -238,7 +233,6 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		disposeResource(getSta(), rs, getCon());
 		return cars;
 	}
 

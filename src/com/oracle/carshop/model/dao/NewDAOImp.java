@@ -47,7 +47,6 @@ public class NewDAOImp extends BaseDAOImp implements NewDAO {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	disposeResource(sta,rs, getCon());
 		return news;
 	}
 
@@ -66,7 +65,6 @@ public class NewDAOImp extends BaseDAOImp implements NewDAO {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	disposeResource(sta,rs, getCon());
 		return n;
 	}
 	public New parseResultsetToNew(ResultSet rs) {
