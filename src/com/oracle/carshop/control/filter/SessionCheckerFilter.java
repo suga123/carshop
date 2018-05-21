@@ -8,9 +8,10 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+@WebFilter(filterName="sessionChecker",urlPatterns="/UserServlet")
 public class SessionCheckerFilter  implements  Filter{
 
 	@Override
@@ -30,18 +31,14 @@ public class SessionCheckerFilter  implements  Filter{
 			chain.doFilter(request, response);//如果正确登录，就放行
 			return ;
 		}
-		
-		
 		if(parameters.contains("method=loadProfile")) {
 			
 			//2.判断session中有没有用户登录的信息
 			if(r.getSession().getAttribute("loginedUser")!=null) {
-				System.out.println("放行");
 				chain.doFilter(request, response);//如果正确登录，就放行
 			}else
 			{
-				System.out.println("您没有正确登录，却要访问需要登录的页面，拦截并跳转到登录页面");
-				rs.sendRedirect("index.jsp");
+				rs.sendRedirect("index.jsp");//如果没有正确登录，直接跳转回登录页面
 			}
 			
 		}else {

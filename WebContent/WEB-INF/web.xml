@@ -13,38 +13,9 @@
     <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
   </resource-env-ref>
   <listener>
-  	<listener-class>com.oracle.carshop.control.listener.SessionListener</listener-class>
+    <listener-class>com.oracle.carshop.control.listener.SessionListener</listener-class>
   </listener>
   <session-config>
-  	<session-timeout>20</session-timeout>
+    <session-timeout>20</session-timeout>
   </session-config>
-  
-  
-  
-  
-  
-  <!--  这里是配置过滤器组件的标记  -->
-  <filter>
-  	<filter-name>CharacterFilter</filter-name>
-  	<filter-class>com.oracle.carshop.control.filter.CharacterFilter</filter-class>
-  </filter>
-  
-  <filter-mapping>
-  	<filter-name>CharacterFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  
-  <filter>
-  	<filter-name>SessionCheckerFilter</filter-name>
-  	<filter-class>com.oracle.carshop.control.filter.SessionCheckerFilter</filter-class>
-  </filter>
-  
-  <filter-mapping>
-  	<filter-name>SessionCheckerFilter</filter-name>
-  	<url-pattern>/UserServlet</url-pattern>
-  </filter-mapping>
-  
-  
-  
 </web-app>
