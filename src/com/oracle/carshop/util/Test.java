@@ -1,6 +1,7 @@
 package com.oracle.carshop.util;
 
 import java.security.MessageDigest;
+import java.util.Locale;
 
 import com.oracle.carshop.model.dao.CarDAOImp;
 

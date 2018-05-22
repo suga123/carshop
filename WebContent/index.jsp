@@ -1,6 +1,8 @@
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %><!-- EL的函数库=jstl的函数 -->
 <%@page  contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 
 <!DOCTYPE html>
@@ -16,9 +18,11 @@
 <head><base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/CarShop/">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	
-	<title>二手車交易平台|首页</title>
-	
+	<fmt:setLocale value="zh_CN"/>
+	<fmt:setBundle basename="resource"  var="r" /><!-- 配置好要引用的资源文件 -->
+	<title>
+	<fmt:message  key="index_title"   bundle="${r }" ></fmt:message>
+	</title>
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 	
