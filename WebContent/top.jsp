@@ -24,6 +24,9 @@
 					<input type="text" id="s" name="key" placeholder="搜索"/>
 					<% }%>
 					<button type="submit" id="searchsubmit"></button>
+					<table id="allPipei" style="width:100px;border:1px solid black;position: absolute ; display: none; width: 195px;top: 118px;">
+							
+					</table>
 				</p>
 
 			</form><!--/ #searchform-->

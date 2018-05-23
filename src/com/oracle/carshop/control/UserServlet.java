@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 import javax.servlet.ServletConfig;
@@ -75,6 +76,10 @@ public class UserServlet extends HttpServlet {
 			loadProfile(request, response);
 			break;
 		}
+		case "checkUserExists": {
+			checkUserExists(request, response);
+			break;
+		}
 		default:
 			break;
 		}
@@ -100,6 +105,19 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.getSession().removeAttribute("loginedUser");
 		response.sendRedirect("index.jsp");
+	}
+	protected void checkUserExists(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("检测用户是否存在的方法");
+		String  username=request.getParameter("username");
+		boolean result=dao.checkUserExsit(username);//调用dao方法判断该用户名是否存在
+		//悄悄把数据会给他
+		//用response（响应）对象中的输出流将处理好的结果输出给ajax请求对象
+		response.setContentType("text/html;charset=UTF-8");//  text/html     ,text/xml    ,text/json
+		PrintWriter  out=response.getWriter();//获取响应对象中的输出流
+		out.write(result+"");
+		out.flush();
+		out.close();
 	}
 	/**
 	 * 加载个人资料

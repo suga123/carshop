@@ -249,4 +249,19 @@ public class CarDAOImp extends BaseDAOImp  implements CarDao {
 		}
 		return n;
 	}
+
+	@Override
+	public ArrayList<String> mohuSearch(String key) {
+		ArrayList<String> titles = new ArrayList<String>();
+		ResultSet rs = null;
+		try {
+			rs = getSta().executeQuery("select  xilie  from  car  where xilie  like '%"+key+"%'  limit 10");
+			while (rs.next()) {
+					titles.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return titles;
+	}
 }

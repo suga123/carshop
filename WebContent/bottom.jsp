@@ -134,7 +134,7 @@
 		</c:if>
 		<p>
 			<label>账户*</label>
-			<input class="input-medium" type="text"  name="username"  value="${cookie.username.value }"/>
+			<input     class="input-medium" type="text"  name="username"  value="${cookie.username.value }" style="width: 80px;"/><span id="userExtist"></span>
 		</p>
 			<p>
 			<label>密码*</label>
@@ -178,7 +178,125 @@
 <![endif]-->
 <script src="sliders/flexslider/jquery.flexslider-min.js"></script>
 <script type="text/javascript">
+
+//var  xhr;
+/**
+ * 定义一个处理ajax返回结果的函数，这里面写处理结果的代码
+ */
+ /**
+	function  processResult(){
+		
+		if(xhr.readyState==4){
+				if(xhr.status==200)
+				{
+					var  result=xhr.responseText;
+					if(result=='true'){
+						$("#userExtist").html("<b style='color:green'>√</b>");
+					}else
+					{
+						$("#userExtist").html("<b style='color:red'>×</b>");
+					}
+				}
+		}
+	}
+	
+	**/
+
 	$(document).ready(function(){
+		
+		/**
+		登录用户名检测是否存在的ajax代码
+		**/
+		$(" [name='username'] ").blur(function(){
+			$.get("UserServlet?method=checkUserExists&username="+$(this).val(),function(data,status){
+				if(data=='true'){
+					$("#userExtist").html("<b style='color:green'>√</b>");
+				}else
+				{
+					$("#userExtist").html("<b style='color:red'>×</b>");
+				}
+			});
+		});
+		
+		/**
+		搜索框模糊匹配ajax代码
+		**/
+		$("#s").keyup(function(){
+			
+			$.post("CarServlet",
+						{
+							"key":$(this).val(),
+							"method":"mohuSearch"
+						},
+						function(data,status){
+							var   allPipeis=data.getElementsByTagName("title");
+							if(allPipeis.length>0){
+								$("#allPipei").css("display","block");
+								
+								  for (var i=0;i<document.getElementById("allPipei").rows.length;i++)
+								     {
+									  document.getElementById("allPipei").deleteRow(i);
+								     }
+								//document.getElementById("allPipei").rows.length=0;//清空表格之前的所有航
+								for(var  n=0;n<allPipeis.length;n++)
+								{
+									var  tr=document.getElementById("allPipei").insertRow();
+									tr.style.width="195px";
+									tr.style.cursor="pointer";
+									
+									var  td=tr.insertCell();
+									td.innerHTML=allPipeis[n].childNodes[0].nodeValue;
+									td.style.textAlign="left";
+									td.style.width="195px";
+									td.style.cursor="pointer";
+									td.onclick=function(){
+										$("#s").val(this.innerHTML);
+										$("#allPipei").css("display","none");
+									}
+									tr.onmouseover=function(){
+										this.style.backgroundColor='orange';
+									}
+									tr.onmouseout=function(){
+										this.style.backgroundColor='';
+									}
+								}
+							}
+						
+							
+						
+					   })
+		});
+		
+		/**
+		$(" [name='username'] ").blur(function(){
+			var yourINputUsername=$(this).val();
+			//1.创建一个ajax对象
+			
+			if(window.ActiveXObject){
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}else if(window.XMLHttpRequest){
+				xhr = new XMLHttpRequest();
+			}else{
+				alert("can't create xhr object!");
+			}
+			
+			//2.准备数据回传过来之后的处理函数
+			xhr.onreadystatechange=processResult;
+			
+			//3.用ajax对象发起后台"静默"(悄悄的)请求
+			xhr.open("get","UserServlet");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		      xhr.send("method=checkUserExists&username="+yourINputUsername);
+
+
+			
+
+			
+			
+		});
+		**/
+		
+		
 		$("#registerButton").click(function(){
 			$("#method").val("register");
 			$("#loginForm").submit();//用jquery提交表单的代码

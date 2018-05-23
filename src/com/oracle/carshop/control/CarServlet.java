@@ -1,6 +1,7 @@
 package com.oracle.carshop.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -66,6 +67,11 @@ public class CarServlet extends HttpServlet {
 	{
 		compare(request,response);
 		break;
+	
+	}case "mohuSearch"://搜索框模糊匹配关键字
+	{
+		mohuSearch(request,response);
+		break;
 	}
 	default:
 		break;
@@ -106,6 +112,29 @@ public class CarServlet extends HttpServlet {
 		request.setAttribute("car", carInfo);
 		
 		request.getRequestDispatcher("carDetail.jsp").forward(request, response);
+	}
+	/**
+	 * 这是前台ajax模糊查询关键字的业务方法
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void mohuSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String  key=request.getParameter("key");
+		System.out.println(key);
+		ArrayList<String>  pipeis=dao.mohuSearch(key);
+		
+		response.setContentType("text/xml;charset=UTF-8");
+		PrintWriter   out=response.getWriter();
+		out.write("<?xml version='1.0'   encoding='UTF-8' ?>\r\n");
+		out.write("<titles>\r\n");
+			for(String k:pipeis) {
+				out.write("<title>"+k+"</title>\r\n");
+			}
+		out.write("</titles>");
+		out.flush();
+		out.close();
 	}
 	/**
 	 * 这是处理搜索功能的方法

@@ -65,4 +65,6 @@ public interface  CarDao  extends BaseDAO{
 	 * @return
 	 */
 	public int getAllCountOfCars();
+	
+	public  ArrayList<String>  mohuSearch(String key);
 }
