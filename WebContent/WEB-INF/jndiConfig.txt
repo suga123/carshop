@@ -1,0 +1,10 @@
+    <Resource name="carshop"    
+          auth="Container"      
+          type="javax.sql.DataSource"   
+          driverClassName="com.mysql.jdbc.Driver"    
+          url="jdbc:mysql://localhost:3306/carshop?useSSL=false"
+          username="root"   
+          password="rootroot"   
+          maxTotal="200"        
+          maxIdle="50"          
+          maxWaitMillis="10000"/>  
