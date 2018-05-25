@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.oracle.carshop.model.bean.Car;
 import com.oracle.carshop.model.bean.New;
 import com.oracle.carshop.model.bean.PageBean;
@@ -71,6 +74,10 @@ public class CarServlet extends HttpServlet {
 	}case "mohuSearch"://搜索框模糊匹配关键字
 	{
 		mohuSearch(request,response);
+		break;
+	}case "listCarByAjaxRequest"://搜索框模糊匹配关键字
+	{
+		listCarByAjaxRequest(request,response);
 		break;
 	}
 	default:
@@ -210,6 +217,57 @@ public class CarServlet extends HttpServlet {
 		request.setAttribute("pageBean", pageBean);
 		request.setAttribute("cars", cars);
 		request.getRequestDispatcher("carList.jsp").forward(request, response);
+	}
+	/**
+	 * Ajax分页请求方法
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void listCarByAjaxRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String  page=request.getParameter("page");
+		String count=request.getParameter("count");
+		ArrayList<Car>  cars=dao.listCarByPage(Integer.parseInt(page),Integer.parseInt(count));
+		response.setContentType("text/json;charset=utf-8");
+		PrintWriter  out=response.getWriter();
+		JSONArray  allCars=new JSONArray();
+		for(Car  c:cars) {
+			JSONObject  car=new JSONObject();
+			try {
+				car.put("image", c.getQicheshoutu());
+				car.put("jiage", c.getShoujia());
+				car.put("gonglishu", c.getGonglishu());
+				car.put("goumaishijian", c.getGoumaishijian());
+				car.put("pailiang", c.getPailiang());
+				car.put("id", c.getCarId());
+				car.put("xilie", c.getXilie());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			allCars.put(car);
+		}
+		out.write(allCars.toString());
+		/**
+		 * xml方式返回ajax请求当结构化的数据
+		 */
+//		out.write("<?xml  version='1.0'  encoding='utf-8'  ?>");
+//		out.write("<cars>");
+//		for(Car  c:cars) {
+//			out.write("<car>");
+//				out.write("<carbrand>"+c.getPinpaiming()+"</carbrand>");
+//				out.write("<price>"+c.getShoujia()+"</price>");
+//				out.write("<xilie>"+c.getXilie()+"</xilie>");
+//				out.write("<pailiang>"+c.getPailiang()+"</pailiang>");
+//				out.write("<gonglishu>"+c.getGonglishu()+"</gonglishu>");
+//			out.write("</car>");
+//		}
+//		
+//		
+//		out.write("</cars>");
+		out.flush();
+		out.close();
 	}
 	/**
 	 * 车型比较的方法

@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="js/modernizr.custom.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body class="menu-1 h-style-1 text-1">
+<input type="hidden"  id="nowPage" value="1"/>
 <div class="wrap">
 	<c:import url="top.jsp"></c:import>
 	<!-- - - - - - - - - - - - - - Top Panel - - - - - - - - - - - - - - - - -->	
@@ -179,7 +180,7 @@
 					
 					<h3 class="widget-title">最近发布的二手车</h3>
 
-					<ul class="clearfix">
+					<ul id="allCars" class="clearfix">
 
 
 						<c:forEach  var="c"  items="${requestScope.allCars }" varStatus="s">
@@ -211,7 +212,7 @@
 					</ul>
 
 					<a href="CarServlet?method=listCarByPage&page=1&count=3" class="see">查看更多</a>
-					
+					<div style="margin: auto;display: none;" id="loading"><img src="images/loading.gif" style="width: 30px;height: 30px;"/></div>
 				</div><!--/ .recent-list-cars-->
 				
 			</section><!--/ #content-->
@@ -331,4 +332,29 @@
 		});
 		location.href='CarServlet?method=compare&ids='+ids;
 	}
+	
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+			if(Math.round(scrollTop) + windowHeight >= scrollHeight){
+				
+				$("#loading").css("display","block");
+				setTimeout(function(){
+					//1.当滚动到网页地步当时候应该发起ajax请求下一页当数据
+					var  nowPage=$("#nowPage").val();
+					$.get("CarServlet?method=listCarByAjaxRequest&page="+(nowPage+1)+"&count=15",function(data){
+						for(var  n=0;n<data.length;n++)
+						{
+							var  newCar="<li><a   name='sellCar'   href='CarServlet?method=detail&carid="+data[n].id+"' class='single-image video picture'><img style='width: 200px;height: 120px;' src='"+data[n].image+"' alt='' /></a><a href='CarServlet?method=detail&carid="+data[n].id+"' class='list-meta'><h6 class='title-list-item'>"+data[n].goumaishijian+"&nbsp;"+data[n].pailiang+"&nbsp;"+data[n].xilie+"</h6></a><div class='detailed'><span class='cost'>"+data[n].jiage+"万</span><span>"+data[n].pailiang+"</span> <br /><b>"+data[n].gonglishu+"公里</b></div><a href='CarServlet?method=detail&carid="+data[n].id+"' class='button orange'>详情</a>&nbsp;<a href='ShoppingCarServlet?method=add&carid="+data[n].id+"'  target='_blank'><img onmouseover=this.style.boxShadow='-1px  -1px  12px red' onmouseout=this.style.boxShadow=''  src='images/shoppingCar.png' width='25' height='25' title='添加到购物车' style='margin: 0px;padding: 0px;position: relative;top: 8px;border-radius:12.5px' /></a><label class='compare'><input  name='compare'  value='"+data[n].id+"'  type='checkbox' /><a href='javascript:compare()'>比较</a></label></li>"
+							$("#allCars").append(newCar);
+						}
+						$("#loading").css("display","none");
+					});
+				}, 5000);
+					
+			}
+		})
+	})
 </script>
